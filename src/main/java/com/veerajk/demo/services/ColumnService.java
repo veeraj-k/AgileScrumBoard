@@ -1,5 +1,6 @@
 package com.veerajk.demo.services;
 
+import com.veerajk.demo.model.Board;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.repo.BoardRepo;
 import com.veerajk.demo.repo.ColumnRepo;
@@ -21,24 +22,39 @@ public class ColumnService {
     BoardRepo boardRepo;
     public ResponseEntity<Column> addColumn(Column column,Long boardid){
         try{
-            column.setBoard(boardRepo.findById(boardid).orElse(null));
-            columnRepo.save(column);
-            return  new ResponseEntity<>(column,HttpStatus.CREATED);
-        }catch(Exception e){e.printStackTrace();}
+            Optional board = boardRepo.findById(boardid);
+            if(board.get()!=null) {
+                column.setBoard((Board) board.get());
+                columnRepo.save(column);
+                return new ResponseEntity<>(column, HttpStatus.CREATED);
+            }
+            else {
+                return new ResponseEntity<>(new Column(),HttpStatus.NOT_FOUND);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return new ResponseEntity<>(new Column(), HttpStatus.BAD_REQUEST);
     }
-    public ResponseEntity<List<Column>> getAllColumns(){
+    public ResponseEntity<List<Column>> getAllColumns(Long boardid){
         try{
 
-            return  new ResponseEntity<>(columnRepo.findAllByOrderByLocationAsc(),HttpStatus.OK);
-        }catch(Exception e){e.printStackTrace();}
+            return new ResponseEntity<>(boardRepo.findById(boardid).get().getColumns(), HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
+
     public ResponseEntity<Optional<Column>> getColumn(Long id){
         try{
-
-            return  new ResponseEntity<>(columnRepo.findById(id),HttpStatus.OK);
-        }catch(Exception e){e.printStackTrace();}
+            return new ResponseEntity<>(columnRepo.findById(id),HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }

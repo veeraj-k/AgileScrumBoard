@@ -37,7 +37,7 @@ public class Column {
 
     @ManyToOne
     @JoinColumn(name = "boardid", referencedColumnName = "id")//, nullable = false)
-    @JsonBackReference //this one
+    @JsonBackReference
     private Board board;
      
 }

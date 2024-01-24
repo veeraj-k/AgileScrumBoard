@@ -12,22 +12,24 @@ import com.veerajk.demo.model.Column;
 import com.veerajk.demo.repo.ColumnRepo;
 @CrossOrigin("http://localhost:3000/")
 @RestController
+@RequestMapping("api/boards/{boardid}/columns")
 public class ColumnController {
 
 	@Autowired
 	ColumnService columnService;
 
-	@PostMapping("/{boardid}/addColumn")
+	@PostMapping
 	public ResponseEntity<Column> addColumn(@RequestBody Column column,@PathVariable Long boardid){
 		return columnService.addColumn(column,boardid);
 	}
 
-	@GetMapping("/columns")
-	public ResponseEntity<List<Column>> getAllColumns(){
-		return columnService.getAllColumns();
+
+	@GetMapping
+	public ResponseEntity<List<Column>> getAllColumns(@PathVariable Long boardid){
+		return columnService.getAllColumns(boardid); //
 	}
 
-	@GetMapping("/column/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<Optional<Column>> getColumn(@PathVariable Long id){
 		return columnService.getColumn(id);
 	}

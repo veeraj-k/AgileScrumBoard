@@ -11,8 +11,8 @@ import java.util.List;
 public interface ColumnRepo  extends JpaRepository<Column, Long>{
     public Column findByTitle(String title);
     public  Column findById(long id);
-
-    public List<Column> findAllByOrderByLocationAsc();
+//    public Column findByBoard(long id);
+//    public List<Column> findAllByBoardOrderByLocationAsc(long boardid);
 //    public List<Column> fin
 
 }
