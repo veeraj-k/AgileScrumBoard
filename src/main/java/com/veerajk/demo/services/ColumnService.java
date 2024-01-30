@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +40,10 @@ public class ColumnService {
     }
     public ResponseEntity<List<Column>> getAllColumns(Long boardid){
         try{
-
-            return new ResponseEntity<>(boardRepo.findById(boardid).get().getColumns(), HttpStatus.OK);
+//            List<Column> cols = columnRepo.findByBoardO(boardid);
+            List<Column> cols = boardRepo.findById(boardid).get().getColumns();
+            cols.sort((Column c1, Column c2) -> c1.getLocation() - c2.getLocation());
+            return new ResponseEntity<>(cols, HttpStatus.OK);
         }
         catch(Exception e){
             e.printStackTrace();
