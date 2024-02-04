@@ -3,6 +3,7 @@ package com.veerajk.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.veerajk.demo.requests.ColumnRemoveRequest;
 import com.veerajk.demo.services.ColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class ColumnController {
 	@GetMapping("{id}")
 	public ResponseEntity<Optional<Column>> getColumn(@PathVariable Long id){
 		return columnService.getColumn(id);
+	}
+
+	@PutMapping
+	public ResponseEntity<Column> removeColumn(@RequestBody ColumnRemoveRequest columnname, @PathVariable Long boardid){
+		return 	columnService.removeColumn(columnname,boardid);
 	}
 }

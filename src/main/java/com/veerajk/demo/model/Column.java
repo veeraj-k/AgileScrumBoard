@@ -39,5 +39,7 @@ public class Column {
     @JoinColumn(name = "boardid", referencedColumnName = "id")//, nullable = false)
     @JsonBackReference
     private Board board;
+
+    private boolean isvisible=true;
      
 }
