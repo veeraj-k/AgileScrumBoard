@@ -23,8 +23,9 @@ public class BoardController {
         return new ResponseEntity<>(boardDto, HttpStatus.CREATED);
     }
     @GetMapping("{boardid}")
-    public  ResponseEntity getBoard(@PathVariable Long boardid){
-        return boardServiceImpl.getBoard(boardid);
+    public  ResponseEntity getBoard(@PathVariable Long boardid) throws Exception {
+//        return boardServiceImpl.getBoard(boardid);
+        return ResponseEntity.ok(boardServiceImpl.getBoard(boardid));
     }
 
     @GetMapping
