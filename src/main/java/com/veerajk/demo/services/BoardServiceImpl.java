@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
@@ -15,8 +17,10 @@ public class BoardServiceImpl implements BoardService {
 
     public BoardDto addBoard(BoardDto boardDto){
         Board board = mapToEntity(boardDto);
-        boardRepo.save(board);
-        return boardDto;
+        Board boardRes = boardRepo.save(board);
+        BoardDto boardDtoRes = mapToDto(boardRes);
+
+        return boardDtoRes;
     }
 
     public BoardDto getBoard(Long id) throws Exception {
@@ -25,14 +29,11 @@ public class BoardServiceImpl implements BoardService {
         return boardDto;
     }
 
-    public ResponseEntity getAllBoards() {
-        try{
-            return new ResponseEntity(boardRepo.findAll(),HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity(null,HttpStatus.BAD_REQUEST);
+    public List<BoardDto> getAllBoards() {
+        List<Board> boardList = boardRepo.findAll();
+        List<BoardDto> boardDtos = boardList.stream().map((board -> mapToDto(board))).toList();
+
+        return boardDtos;
     }
 
     private BoardDto mapToDto(Board board){
@@ -41,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
         boardDto.setName(board.getName());
         boardDto.setStartdate(board.getStartdate());
         boardDto.setDuration(board.getDuration());
+        boardDto.setDescription(board.getDescription());
         return boardDto;
     }
 

@@ -1,13 +1,15 @@
 package com.veerajk.demo.controller;
 
 import com.veerajk.demo.dtos.BoardDto;
-import com.veerajk.demo.model.Board;
+import com.veerajk.demo.services.BoardService;
 import com.veerajk.demo.services.BoardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin("http://localhost:3000/")
@@ -16,21 +18,21 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     @Autowired
-    BoardServiceImpl boardServiceImpl;
+    BoardServiceImpl boardService;
 
     @PostMapping
     public ResponseEntity<BoardDto> addBoard(@RequestBody BoardDto boardDto){
-        return new ResponseEntity<>(boardDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(boardService.addBoard(boardDto), HttpStatus.CREATED);
     }
     @GetMapping("{boardid}")
-    public  ResponseEntity getBoard(@PathVariable Long boardid) throws Exception {
-//        return boardServiceImpl.getBoard(boardid);
-        return ResponseEntity.ok(boardServiceImpl.getBoard(boardid));
+    public  ResponseEntity<BoardDto> getBoard(@PathVariable Long boardid) throws Exception {
+
+        return ResponseEntity.ok(boardService.getBoard(boardid));
     }
 
     @GetMapping
-    public  ResponseEntity getAllBoards(){
-        return boardServiceImpl.getAllBoards();
+    public  ResponseEntity<List<BoardDto>> getAllBoards(){
+        return ResponseEntity.ok(boardService.getAllBoards());
     }
 
 }
