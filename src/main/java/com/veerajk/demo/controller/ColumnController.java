@@ -28,8 +28,8 @@ public class ColumnController {
 
 
 	@GetMapping
-	public ResponseEntity<List<Column>> getAllColumns(@PathVariable Long boardid){
-		return columnServiceImpl.getAllColumns(boardid);
+	public ResponseEntity<List<ColumnDto>> getAllColumns(@PathVariable Long boardid) throws Exception {
+		return ResponseEntity.ok(columnServiceImpl.getAllColumns(boardid));
 	}
 
 	@GetMapping("{id}")

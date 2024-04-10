@@ -38,16 +38,12 @@ public class ColumnServiceImpl implements ColumnService {
 
         return mapToDto(columnRepo.save(column));
     }
-    public ResponseEntity<List<Column>> getAllColumns(Long boardid){
-        try{
-            List<Column> cols = boardRepo.findById(boardid).get().getColumns();
-            cols.sort((Column c1, Column c2) -> c1.getLocation() - c2.getLocation());
-            return new ResponseEntity<>(cols, HttpStatus.OK);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+    public List<ColumnDto> getAllColumns(Long boardid) throws Exception {
+        Board board = boardRepo.findById(boardid).orElseThrow(()->new Exception("board not found!"));
+        List<Column> columns = columnRepo.findAllByBoardOrderByLocationDesc(board);
+        List<ColumnDto> columnDtoList = columns.stream().map((column -> mapToDto(column))).toList();
+
+        return columnDtoList;
     }
 
     public ResponseEntity<Optional<Column>> getColumn(Long id){
