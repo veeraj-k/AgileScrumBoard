@@ -1,6 +1,7 @@
 package com.veerajk.demo.dtos;
 
 import com.veerajk.demo.enums.TaskType;
+import com.veerajk.demo.model.User;
 import lombok.Data;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public class TaskDto {
     private String description;
     private TaskType type;
     private Integer storyPoints;
-    List<CommentDto> comments;
-
+    private List<CommentDto> comments;
+    private User user;
 }

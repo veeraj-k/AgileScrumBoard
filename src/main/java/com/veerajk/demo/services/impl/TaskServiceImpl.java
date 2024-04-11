@@ -6,6 +6,7 @@ import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Task;
 import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.TaskRepo;
+import com.veerajk.demo.repo.UserRepo;
 import com.veerajk.demo.requests.MoveTaskRequest;
 import com.veerajk.demo.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,18 @@ public class TaskServiceImpl implements TaskService {
     TaskRepo taskRepo;
     ColumnRepo columnRepo;
     CommentServiceImpl commentService;
+    UserRepo userRepo;
 
 //    BoardRepo boardRepo;
 //    UserRepo userRepo;
 
     @Autowired
-    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo,CommentServiceImpl commentService) {
+    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo,CommentServiceImpl commentService,UserRepo userRepo) {
         this.taskRepo = taskRepo;
         this.columnRepo = columnRepo;
         this.commentService = commentService;
 //        this.boardRepo = boardRepo;
-//        this.userRepo = userRepo;
+        this.userRepo = userRepo;
     }
 
     public TaskDto getTask(Long id) throws Exception{
@@ -98,6 +100,7 @@ public class TaskServiceImpl implements TaskService {
             commentDtoList = task.getComments().stream().map((comment) -> commentService.mapCommentToDto(comment)).toList();
         }
         taskDto.setComments(commentDtoList);
+        taskDto.setUser(userRepo.findById(1L).get());
         return taskDto;
     }
     protected Task mapToEntity(TaskDto taskDto){
@@ -106,7 +109,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskDto.getDescription());
         task.setStoryPoints(taskDto.getStoryPoints());
         task.setType(taskDto.getType());
-
+        task.setUser(userRepo.findById(1L).get());
         return task;
     }
 }
