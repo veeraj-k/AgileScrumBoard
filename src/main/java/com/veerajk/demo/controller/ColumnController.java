@@ -33,8 +33,8 @@ public class ColumnController {
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<Optional<Column>> getColumn(@PathVariable Long id){
-		return columnServiceImpl.getColumn(id);
+	public ResponseEntity<ColumnDto> getColumn(@PathVariable Long id) throws Exception{
+		return ResponseEntity.ok(columnServiceImpl.getColumn(id));
 	}
 
 	@PutMapping

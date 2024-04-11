@@ -46,14 +46,10 @@ public class ColumnServiceImpl implements ColumnService {
         return columnDtoList;
     }
 
-    public ResponseEntity<Optional<Column>> getColumn(Long id){
-        try{
-            return new ResponseEntity<>(columnRepo.findById(id),HttpStatus.OK);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ColumnDto getColumn(Long id) throws Exception{
+        Column column = columnRepo.findById(id).orElseThrow(()->new Exception("Column not found!"));
+
+        return mapToDto(column);
     }
 
     public ResponseEntity<Column> removeColumn(ColumnRemoveRequest columnId, Long boardid) {
