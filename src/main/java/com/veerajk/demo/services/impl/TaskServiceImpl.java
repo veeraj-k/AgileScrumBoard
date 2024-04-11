@@ -41,15 +41,15 @@ public class TaskServiceImpl implements TaskService {
         return mapToDto(task);
     }
 
-    public ResponseEntity<List<Task>> getColumnTasks(Long columnid){
-        try{
-            return  new ResponseEntity<>(columnRepo.findById(columnid).get().getTasks(), HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
-    }
+//    public ResponseEntity<List<Task>> getColumnTasks(Long columnid){
+//        try{
+//            return  new ResponseEntity<>(columnRepo.findById(columnid).get().getTasks(), HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+//    }
 
     public TaskDto addTask(TaskDto taskRequestDto , Long columnid) throws Exception{
         Column column = columnRepo.findById(columnid).orElseThrow(()-> new Exception("Column with specified id not found!"));
@@ -58,36 +58,25 @@ public class TaskServiceImpl implements TaskService {
         return taskResponseDto;
     }
 
-    public ResponseEntity<List<Task>> getBoardTasks(Long boardid) {
-        try{
-            List<Task> tasks = new ArrayList<>();
-            List<Column> columns =  boardRepo.findById(boardid).get().getColumns();
+//    public ResponseEntity<List<Task>> getBoardTasks(Long boardid) {
+//        try{
+//            List<Task> tasks = new ArrayList<>();
+//            List<Column> columns =  boardRepo.findById(boardid).get().getColumns();
+//
+//            for(int i = 0 ;i<columns.size();i++){
+//                tasks.addAll(columns.get(i).getTasks());
+//            }
+//            return  new ResponseEntity<>(tasks,HttpStatus.OK);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return new ResponseEntity(null,HttpStatus.BAD_REQUEST);
+//    }
 
-            for(int i = 0 ;i<columns.size();i++){
-                tasks.addAll(columns.get(i).getTasks());
-            }
-            return  new ResponseEntity<>(tasks,HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity(null,HttpStatus.BAD_REQUEST);
-    }
-
-    public ResponseEntity<Task> removeTask(Long taskid) {
-        try{
-            Task t = taskRepo.findById(taskid).get();
-
-
-            if(t==null){
-                throw  new Exception();
-            }
-            t.setIsvisible(false);
-            taskRepo.save(t);
-            return new ResponseEntity<>(t,HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    public String removeTask(Long taskid) throws Exception{
+        Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
+        taskRepo.deleteById(taskid);
+        return "Task deleted successfully!";
 
     }
 

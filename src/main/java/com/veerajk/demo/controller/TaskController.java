@@ -47,19 +47,20 @@ public class TaskController {
 		return ResponseEntity.ok(taskServiceImpl.getTask(id));
 	}
 
-	@GetMapping("columns/{columnid}/tasks")
-	public ResponseEntity<List<Task>> getColumnTasks(@PathVariable Long columnid){
-		return taskServiceImpl.getColumnTasks(columnid);
-	}
-
-	@GetMapping("{boardid}/columns/tasks")
-	public ResponseEntity<List<Task>> getBoardTasks(@PathVariable Long boardid){
-		return taskServiceImpl.getBoardTasks(boardid);
-	}
-
-	@PutMapping("columns/tasks/{taskid}")
-	public ResponseEntity<Task> removeTask(@PathVariable Long taskid){
-		return taskServiceImpl.removeTask(taskid);
+//	---- To be implemented later ----
+//	@GetMapping("columns/{columnid}/tasks")
+//	public ResponseEntity<List<Task>> getColumnTasks(@PathVariable Long columnid){
+//		return taskServiceImpl.getColumnTasks(columnid);
+//	}
+//
+//	@GetMapping("{boardid}/columns/tasks")
+//	public ResponseEntity<List<Task>> getBoardTasks(@PathVariable Long boardid){
+//		return taskServiceImpl.getBoardTasks(boardid);
+//	}
+//
+	@DeleteMapping("columns/tasks/{taskid}")
+	public ResponseEntity<String> removeTask(@PathVariable Long taskid) throws Exception{
+		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
 
 	}
 	@PutMapping("/update")
