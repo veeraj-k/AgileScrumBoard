@@ -1,5 +1,6 @@
 package com.veerajk.demo.services.impl;
 
+import com.veerajk.demo.dtos.CommentDto;
 import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Task;
@@ -10,18 +11,24 @@ import com.veerajk.demo.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TaskServiceImpl implements TaskService {
 
     TaskRepo taskRepo;
     ColumnRepo columnRepo;
+    CommentServiceImpl commentService;
+
 //    BoardRepo boardRepo;
 //    UserRepo userRepo;
 
     @Autowired
-    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo) {
+    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo,CommentServiceImpl commentService) {
         this.taskRepo = taskRepo;
         this.columnRepo = columnRepo;
+        this.commentService = commentService;
 //        this.boardRepo = boardRepo;
 //        this.userRepo = userRepo;
     }
@@ -86,7 +93,11 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setDescription(task.getDescription());
         taskDto.setType(task.getType());
         taskDto.setStoryPoints(task.getStoryPoints());
-
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        if(task.getComments()!=null){
+            commentDtoList = task.getComments().stream().map((comment) -> commentService.mapCommentToDto(comment)).toList();
+        }
+        taskDto.setComments(commentDtoList);
         return taskDto;
     }
     protected Task mapToEntity(TaskDto taskDto){
