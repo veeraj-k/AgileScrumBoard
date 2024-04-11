@@ -37,8 +37,8 @@ public class ColumnController {
 		return ResponseEntity.ok(columnServiceImpl.getColumn(id));
 	}
 
-	@PutMapping
-	public ResponseEntity<Column> removeColumn(@RequestBody ColumnRemoveRequest columnname, @PathVariable Long boardid){
-		return 	columnServiceImpl.removeColumn(columnname,boardid);
+	@DeleteMapping("{id}")
+	public String removeColumn(@PathVariable Long id) throws Exception {
+		return columnServiceImpl.removeColumn(id);
 	}
 }

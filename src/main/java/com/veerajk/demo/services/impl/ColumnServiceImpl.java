@@ -52,29 +52,13 @@ public class ColumnServiceImpl implements ColumnService {
         return mapToDto(column);
     }
 
-    public ResponseEntity<Column> removeColumn(ColumnRemoveRequest columnId, Long boardid) {
-        try{
-
-            Optional<Column> column = columnRepo.findById(columnId.getColumnId());
-            if(column.get()!=null){
-
-                Column col = column.get();
-                List<Task> tasks = col.getTasks();
-
-                for(int i=0;i<tasks.size();i++){
-                    if(tasks.get(i).isIsvisible()){
-                        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-                    }
-                }
-                column.get().setIsvisible(false);
-                columnRepo.save(column.get());
-                return new ResponseEntity<>(column.get(),HttpStatus.OK);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
+    public String  removeColumn(Long id) throws Exception {
+        Column column = columnRepo.findById(id).orElseThrow();
+        if (column.getTasks().size()!= 0) {
+            throw new Exception();
         }
-        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        columnRepo.deleteById(id);
+        return "Column deleted";
     }
 
     private ColumnDto mapToDto(Column column){
