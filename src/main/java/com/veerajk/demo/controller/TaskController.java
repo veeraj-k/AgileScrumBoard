@@ -63,14 +63,9 @@ public class TaskController {
 		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
 
 	}
-	@PutMapping("/update")
-	public void checking(@RequestBody MoveTaskRequest moveTaskRequest){
-		System.out.println("Hello world");
-		Task t = taskRepo.findById(moveTaskRequest.getId());
-		Column c = columnRepo.findById(moveTaskRequest.getColumn_id());
-		t.setColumn_id(c);
+	@PutMapping("columns/tasks/movetask")
+	public ResponseEntity<TaskDto> moveTask(@RequestBody MoveTaskRequest moveTaskRequest) throws Exception {
 
-		taskRepo.save(t);
-
+		return ResponseEntity.ok(taskServiceImpl.moveTask(moveTaskRequest));
 	}
 }

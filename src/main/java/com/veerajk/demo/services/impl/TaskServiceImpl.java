@@ -8,6 +8,7 @@ import com.veerajk.demo.repo.BoardRepo;
 import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.TaskRepo;
 import com.veerajk.demo.repo.UserRepo;
+import com.veerajk.demo.requests.MoveTaskRequest;
 import com.veerajk.demo.requests.TaskRequest;
 import com.veerajk.demo.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,15 @@ public class TaskServiceImpl implements TaskService {
 
     TaskRepo taskRepo;
     ColumnRepo columnRepo;
-    BoardRepo boardRepo;
-    UserRepo userRepo;
+//    BoardRepo boardRepo;
+//    UserRepo userRepo;
 
     @Autowired
-    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo, BoardRepo boardRepo, UserRepo userRepo) {
+    public TaskServiceImpl(TaskRepo taskRepo, ColumnRepo columnRepo) {
         this.taskRepo = taskRepo;
         this.columnRepo = columnRepo;
-        this.boardRepo = boardRepo;
-        this.userRepo = userRepo;
+//        this.boardRepo = boardRepo;
+//        this.userRepo = userRepo;
     }
 
     public TaskDto getTask(Long id) throws Exception{
@@ -78,6 +79,14 @@ public class TaskServiceImpl implements TaskService {
         taskRepo.deleteById(taskid);
         return "Task deleted successfully!";
 
+    }
+
+    public TaskDto moveTask(MoveTaskRequest taskRequest) throws Exception {
+        Column column = columnRepo.findById(taskRequest.getColumn_id()).orElseThrow(()-> new Exception("Specified column not found!"));
+        Task task = taskRepo.findById(taskRequest.getId()).orElseThrow(()-> new Exception("Task not found!"));
+        task.setColumn_id(column);
+        Task updatedtask = taskRepo.save(task);
+        return mapToDto(updatedtask);
     }
 
     private TaskDto mapToDto(Task task){
