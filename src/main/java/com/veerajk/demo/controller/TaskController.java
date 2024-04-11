@@ -3,23 +3,21 @@ package com.veerajk.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.veerajk.demo.PostData;
+import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Column;
-import com.veerajk.demo.model.TaskComment;
 import com.veerajk.demo.requests.MoveTaskRequest;
 import com.veerajk.demo.requests.TaskRequest;
-import com.veerajk.demo.services.TaskService;
+import com.veerajk.demo.services.impl.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.veerajk.demo.repo.*;
 import com.veerajk.demo.model.Task;
 
-import javax.xml.stream.events.Comment;
-
 @RestController
-//@RequestMapping("/board/{id}/")
+@RequestMapping("api/boards/")
 @CrossOrigin("http://localhost:3000/")
 public class TaskController {
 
@@ -32,31 +30,39 @@ public class TaskController {
 	TaskCommentRepo taskCommentRepo;
 
 	@Autowired
-	TaskService taskService;
+	TaskServiceImpl taskServiceImpl;
 
-	@PostMapping("/addTask")
-	public ResponseEntity<Task> addTask(@RequestBody TaskRequest taskreq){
-		return taskService.addTask(taskreq);
+	@PostMapping("{boardid}/columns/{columnid}/tasks")
+	public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskreq , @PathVariable Long columnid) throws Exception{
+		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/tasks")
+	@GetMapping("columns/tasks")
 	public ResponseEntity<List<Task>> getAllTasks() {
-		return taskService.getAlltasks();
+		return taskServiceImpl.getAlltasks();
 	}
 	
-	@GetMapping("/task/{id}")
+	@GetMapping("columns/tasks/{id}")
 	public ResponseEntity<Optional<Task>> getTask(@PathVariable Long id) {
-		return taskService.getTask(id);
+		return taskServiceImpl.getTask(id);
 	}
 
-	@GetMapping("/column/{id}/tasks")
-	public ResponseEntity<List<Task>> getColumnTasks(@PathVariable Long id){
-		return taskService.getColumnTasks(id);
+	@GetMapping("columns/{columnid}/tasks")
+	public ResponseEntity<List<Task>> getColumnTasks(@PathVariable Long columnid){
+		return taskServiceImpl.getColumnTasks(columnid);
 	}
 
+	@GetMapping("{boardid}/columns/tasks")
+	public ResponseEntity<List<Task>> getBoardTasks(@PathVariable Long boardid){
+		return taskServiceImpl.getBoardTasks(boardid);
+	}
 
+	@PutMapping("columns/tasks/{taskid}")
+	public ResponseEntity<Task> removeTask(@PathVariable Long taskid){
+		return taskServiceImpl.removeTask(taskid);
 
-	@PutMapping("/checking")
+	}
+	@PutMapping("/update")
 	public void checking(@RequestBody MoveTaskRequest moveTaskRequest){
 		System.out.println("Hello world");
 		Task t = taskRepo.findById(moveTaskRequest.getId());
