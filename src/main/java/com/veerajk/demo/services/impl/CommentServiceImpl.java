@@ -52,6 +52,13 @@ public class CommentServiceImpl implements CommentService {
         return commentDtoList;
     }
 
+    @Override
+    public String removeComment(Long id) throws Exception {
+        TaskComment comment = commentRepo.findById(id).orElseThrow(()-> new Exception("Comment not found!"));
+        commentRepo.deleteById(id);
+        return "Comment deleted successfully";
+    }
+
     protected CommentDto mapCommentToDto(TaskComment comment){
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());

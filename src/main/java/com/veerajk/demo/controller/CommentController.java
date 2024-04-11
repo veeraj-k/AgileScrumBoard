@@ -33,8 +33,8 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getTaskComments(taskid));
     }
 
-    @DeleteMapping("/api/comments/{commentid}")
-    public TaskComment removeComment(@PathVariable Long commentid){
-        return null;
+    @DeleteMapping("/api/boards/columns/tasks/comments/{id}")
+    public ResponseEntity removeComment(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(commentService.removeComment(id));
     }
 }
