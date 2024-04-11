@@ -35,24 +35,10 @@ public class TaskServiceImpl implements TaskService {
         this.userRepo = userRepo;
     }
 
-    public ResponseEntity<List<Task>> getAlltasks(){
-        try{
-            return  new ResponseEntity<>(taskRepo.findAll(),HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
-    }
+    public TaskDto getTask(Long id) throws Exception{
+        Task task = taskRepo.findById(id).orElseThrow(()-> new Exception("Task not found!"));
 
-    public  ResponseEntity<Optional<Task>> getTask(Long id){
-        try{
-            return  new ResponseEntity<>(taskRepo.findById(id),HttpStatus.OK);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        return mapToDto(task);
     }
 
     public ResponseEntity<List<Task>> getColumnTasks(Long columnid){

@@ -37,14 +37,14 @@ public class TaskController {
 		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("columns/tasks")
-	public ResponseEntity<List<Task>> getAllTasks() {
-		return taskServiceImpl.getAlltasks();
-	}
+//	@GetMapping("columns/tasks")
+//	public ResponseEntity<List<Task>> getAllTasks() {
+//		return taskServiceImpl.getAlltasks();
+//	}
 	
 	@GetMapping("columns/tasks/{id}")
-	public ResponseEntity<Optional<Task>> getTask(@PathVariable Long id) {
-		return taskServiceImpl.getTask(id);
+	public ResponseEntity<TaskDto> getTask(@PathVariable Long id) throws Exception {
+		return ResponseEntity.ok(taskServiceImpl.getTask(id));
 	}
 
 	@GetMapping("columns/{columnid}/tasks")
