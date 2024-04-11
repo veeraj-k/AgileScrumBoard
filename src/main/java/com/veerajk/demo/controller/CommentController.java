@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("http://localhost:3000/")
 public class CommentController {
@@ -24,6 +26,11 @@ public class CommentController {
     public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto,@PathVariable Long taskid) throws Exception {
 
         return  new ResponseEntity<>(commentService.addComment(commentDto,taskid), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/api/boards/{boardid}/columns/tasks/{taskid}/comments")
+    public ResponseEntity<List<CommentDto>> getTaskComments(@PathVariable Long taskid) throws Exception{
+        return ResponseEntity.ok(commentService.getTaskComments(taskid));
     }
 
     @DeleteMapping("/api/comments/{commentid}")

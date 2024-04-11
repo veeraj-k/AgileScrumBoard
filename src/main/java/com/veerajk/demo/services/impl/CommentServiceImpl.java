@@ -11,6 +11,9 @@ import com.veerajk.demo.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     UserRepo userRepo;
@@ -35,6 +38,18 @@ public class CommentServiceImpl implements CommentService {
         taskComment.setTaskid(task);
 
         return mapCommentToDto(commentRepo.save(taskComment));
+    }
+
+    @Override
+    public List<CommentDto> getTaskComments(Long taskid) throws Exception {
+        Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
+        List<TaskComment> comments = task.getComments();
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        if(comments!=null){
+            commentDtoList = comments.stream().map((comment) -> mapCommentToDto(comment)).toList();
+        }
+
+        return commentDtoList;
     }
 
     protected CommentDto mapCommentToDto(TaskComment comment){
