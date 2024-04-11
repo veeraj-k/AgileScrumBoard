@@ -1,26 +1,33 @@
 package com.veerajk.demo.controller;
 
+import com.veerajk.demo.dtos.CommentDto;
 import com.veerajk.demo.model.TaskComment;
 import com.veerajk.demo.repo.TaskCommentRepo;
 import com.veerajk.demo.repo.TaskRepo;
+import com.veerajk.demo.repo.UserRepo;
+import com.veerajk.demo.requests.AddComment;
+import com.veerajk.demo.services.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("http://localhost:3000/")
 public class CommentController {
 
+
     @Autowired
-    TaskCommentRepo taskCommentRepo;
-    @Autowired
-    TaskRepo taskRepo;
-    @PostMapping("/addComment")
-    public TaskComment addComment(@RequestBody TaskComment taskComment){
-        System.out.println(taskComment.getTaskid());
-        taskComment.setTaskid(taskRepo.findById(1L));
-//        taskCommentRepo.save(taskComment);
-        System.out.println(taskComment.getTaskid());
-        return taskComment;
+    CommentServiceImpl commentService;
+
+    @PostMapping("/api/boards/{boardid}/columns/tasks/{taskid}/comments")
+    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto,@PathVariable Long taskid) throws Exception {
+
+        return  new ResponseEntity<>(commentService.addComment(commentDto,taskid), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/api/comments/{commentid}")
+    public TaskComment removeComment(@PathVariable Long commentid){
+        return null;
     }
 }
