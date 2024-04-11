@@ -1,24 +1,14 @@
 package com.veerajk.demo.services.impl;
 
 import com.veerajk.demo.dtos.TaskDto;
-import com.veerajk.demo.model.Board;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Task;
-import com.veerajk.demo.repo.BoardRepo;
 import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.TaskRepo;
-import com.veerajk.demo.repo.UserRepo;
 import com.veerajk.demo.requests.MoveTaskRequest;
-import com.veerajk.demo.requests.TaskRequest;
 import com.veerajk.demo.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -39,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto getTask(Long id) throws Exception{
         Task task = taskRepo.findById(id).orElseThrow(()-> new Exception("Task not found!"));
 
-        return mapToDto(task);
+        return mapTaskToDto(task);
     }
 
 //    public ResponseEntity<List<Task>> getColumnTasks(Long columnid){
@@ -55,7 +45,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto addTask(TaskDto taskRequestDto , Long columnid) throws Exception{
         Column column = columnRepo.findById(columnid).orElseThrow(()-> new Exception("Column with specified id not found!"));
         Task task = mapToEntity(taskRequestDto);
-        TaskDto taskResponseDto = mapToDto(taskRepo.save(task));
+        TaskDto taskResponseDto = mapTaskToDto(taskRepo.save(task));
         return taskResponseDto;
     }
 
@@ -86,10 +76,10 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepo.findById(taskRequest.getId()).orElseThrow(()-> new Exception("Task not found!"));
         task.setColumn_id(column);
         Task updatedtask = taskRepo.save(task);
-        return mapToDto(updatedtask);
+        return mapTaskToDto(updatedtask);
     }
 
-    private TaskDto mapToDto(Task task){
+    protected TaskDto mapTaskToDto(Task task){
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());
         taskDto.setTitle(task.getTitle());
@@ -99,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
 
         return taskDto;
     }
-    private Task mapToEntity(TaskDto taskDto){
+    protected Task mapToEntity(TaskDto taskDto){
         Task task = new Task();
         task.setTitle(taskDto.getTitle());
         task.setDescription(taskDto.getDescription());
