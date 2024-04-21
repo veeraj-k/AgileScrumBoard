@@ -51,9 +51,11 @@ public class TaskServiceImpl implements TaskService {
 //        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
 //    }
 
-    public TaskDto addTask(TaskDto taskRequestDto , Long columnid) throws Exception{
+    public TaskDto addTask(TaskDto taskRequestDto , Long columnid,Long userid) throws Exception{
         Column column = columnRepo.findById(columnid).orElseThrow(()-> new Exception("Column with specified id not found!"));
         Task task = mapToEntity(taskRequestDto);
+        task.setUser(userRepo.findById(userid).get());
+        task.setColumn_id(column);
         TaskDto taskResponseDto = mapTaskToDto(taskRepo.save(task));
         return taskResponseDto;
     }
@@ -72,6 +74,20 @@ public class TaskServiceImpl implements TaskService {
 //        }
 //        return new ResponseEntity(null,HttpStatus.BAD_REQUEST);
 //    }
+    public String editTaskTitle(Long taskid,String newTitle) throws Exception{
+        Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
+        task.setTitle(newTitle);
+        taskRepo.save(task);
+        return "Title updated successfully!";
+    }
+
+    public String editTaskDescription(Long taskid,String newDescription) throws Exception{
+        Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
+        task.setDescription(newDescription);
+        taskRepo.save(task);
+        return "Description updated successfully!";
+    }
+
 
     public String removeTask(Long taskid) throws Exception{
         Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
@@ -100,7 +116,7 @@ public class TaskServiceImpl implements TaskService {
             commentDtoList = task.getComments().stream().map((comment) -> commentService.mapCommentToDto(comment)).toList();
         }
         taskDto.setComments(commentDtoList);
-        taskDto.setUser(userRepo.findById(1L).get());
+        taskDto.setUser(task.getUser());
         return taskDto;
     }
     protected Task mapToEntity(TaskDto taskDto){
@@ -109,7 +125,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskDto.getDescription());
         task.setStoryPoints(taskDto.getStoryPoints());
         task.setType(taskDto.getType());
-        task.setUser(userRepo.findById(1L).get());
+//        task.setUser(userRepo.findById(1L).get());
         return task;
     }
 }

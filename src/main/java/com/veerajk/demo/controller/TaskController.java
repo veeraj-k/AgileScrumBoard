@@ -32,11 +32,20 @@ public class TaskController {
 	@Autowired
 	TaskServiceImpl taskServiceImpl;
 
-	@PostMapping("{boardid}/columns/{columnid}/tasks")
-	public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskreq , @PathVariable Long columnid) throws Exception{
-		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid), HttpStatus.CREATED);
+	@PostMapping("{boardid}/columns/{columnid}/tasks/user/{userid}")
+	public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskreq , @PathVariable Long columnid,@PathVariable Long userid) throws Exception{
+		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid,userid), HttpStatus.CREATED);
 	}
-	
+
+	@PutMapping("/columns/tasks/{id}/editTitle")
+	public ResponseEntity<String> editTaskTitle(@PathVariable Long id,@RequestBody String newTitle) throws Exception {
+		return ResponseEntity.ok(taskServiceImpl.editTaskTitle(id,newTitle));
+	}
+	@PutMapping("/columns/tasks/{id}/editDescription")
+	public ResponseEntity<String> editTaskDescription(@PathVariable Long id,@RequestBody String newDescription) throws Exception {
+		return ResponseEntity.ok(taskServiceImpl.editTaskDescription(id,newDescription));
+	}
+
 //	@GetMapping("columns/tasks")
 //	public ResponseEntity<List<Task>> getAllTasks() {
 //		return taskServiceImpl.getAlltasks();
