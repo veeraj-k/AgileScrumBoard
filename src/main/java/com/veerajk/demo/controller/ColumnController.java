@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.veerajk.demo.dtos.ColumnDto;
+import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.requests.ColumnRemoveRequest;
 import com.veerajk.demo.services.impl.ColumnServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class ColumnController {
 	@DeleteMapping("{id}")
 	public String removeColumn(@PathVariable Long id) throws Exception {
 		return columnServiceImpl.removeColumn(id);
+	}
+
+	@GetMapping("/plaincolumns")
+	public ResponseEntity<List<ColumnWithoutTaskDto>> getColumnsWithoutTasks(@PathVariable Long boardid){
+		return ResponseEntity.ok(columnServiceImpl.getOnlyColumns(boardid));
 	}
 }

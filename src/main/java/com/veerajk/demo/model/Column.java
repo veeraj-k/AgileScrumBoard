@@ -21,6 +21,7 @@ import org.hibernate.annotations.FetchMode;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "bcolumn")
 public class Column {
 
     @Id
@@ -31,7 +32,7 @@ public class Column {
 
     private int location;
     
-//    @JsonManagedReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "column_id", cascade = CascadeType.ALL)
     private List<Task> tasks;
 

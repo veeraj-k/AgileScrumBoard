@@ -1,6 +1,7 @@
 package com.veerajk.demo.services.impl;
 
 import com.veerajk.demo.dtos.ColumnDto;
+import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Board;
 import com.veerajk.demo.model.Column;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ColumnServiceImpl implements ColumnService {
@@ -58,6 +60,11 @@ public class ColumnServiceImpl implements ColumnService {
         }
         columnRepo.deleteById(id);
         return "Column deleted";
+    }
+
+    public List<ColumnWithoutTaskDto> getOnlyColumns(Long boardid){
+        List<Column> columns = boardRepo.findById(boardid).orElseThrow().getColumns();
+        return columns.stream().map((column -> {ColumnWithoutTaskDto col = new ColumnWithoutTaskDto(column.getId(),column.getTitle()); return col;})).collect(Collectors.toList());
     }
 
     private ColumnDto mapColumnToDto(Column column){
