@@ -1,5 +1,6 @@
 package com.veerajk.demo.services.impl;
 
+import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.dtos.CommentDto;
 import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Column;
@@ -104,6 +105,11 @@ public class TaskServiceImpl implements TaskService {
         return mapTaskToDto(updatedtask);
     }
 
+    public ColumnWithoutTaskDto getColumnOfTask(Long id){
+        Task task = taskRepo.findById(id).orElseThrow();
+        Column col = task.getColumn_id();
+        return new ColumnWithoutTaskDto(col.getId(), col.getTitle());
+    }
     protected TaskDto mapTaskToDto(Task task){
         TaskDto taskDto = new TaskDto();
         taskDto.setId(task.getId());

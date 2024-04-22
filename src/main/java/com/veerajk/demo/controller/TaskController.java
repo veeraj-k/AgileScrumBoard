@@ -3,6 +3,7 @@ package com.veerajk.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.requests.MoveTaskRequest;
@@ -76,5 +77,10 @@ public class TaskController {
 	public ResponseEntity<TaskDto> moveTask(@RequestBody MoveTaskRequest moveTaskRequest) throws Exception {
 
 		return ResponseEntity.ok(taskServiceImpl.moveTask(moveTaskRequest));
+	}
+
+	@GetMapping("columns/tasks/{id}/getColumn")
+	public ResponseEntity<ColumnWithoutTaskDto> getColumnOfTask(@PathVariable Long id){
+		return ResponseEntity.ok(taskServiceImpl.getColumnOfTask(id));
 	}
 }
