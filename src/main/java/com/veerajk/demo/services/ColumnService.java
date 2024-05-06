@@ -8,5 +8,5 @@ public interface ColumnService {
     ColumnDto addColumn(ColumnDto columnDto,Long boardid);
     List<ColumnDto> getAllColumns(Long boardid) throws Exception;
     ColumnDto getColumn(Long id) throws Exception;
-    String removeColumn(Long id) throws Exception;
+    String removeColumn(Long id,Long targetid) throws Exception;
 }

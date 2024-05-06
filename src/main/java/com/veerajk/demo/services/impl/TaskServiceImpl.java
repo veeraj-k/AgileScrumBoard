@@ -24,7 +24,7 @@ public class TaskServiceImpl implements TaskService {
     CommentServiceImpl commentService;
     UserRepo userRepo;
 
-//    BoardRepo boardRepo;
+//    SprintRepo sprintRepo;
 //    UserRepo userRepo;
 
     @Autowired
@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepo = taskRepo;
         this.columnRepo = columnRepo;
         this.commentService = commentService;
-//        this.boardRepo = boardRepo;
+//        this.sprintRepo = sprintRepo;
         this.userRepo = userRepo;
     }
 
@@ -64,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
 //    public ResponseEntity<List<Task>> getBoardTasks(Long boardid) {
 //        try{
 //            List<Task> tasks = new ArrayList<>();
-//            List<Column> columns =  boardRepo.findById(boardid).get().getColumns();
+//            List<Column> columns =  sprintRepo.findById(boardid).get().getColumns();
 //
 //            for(int i = 0 ;i<columns.size();i++){
 //                tasks.addAll(columns.get(i).getTasks());

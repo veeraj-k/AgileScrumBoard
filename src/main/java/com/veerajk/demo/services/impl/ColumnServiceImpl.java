@@ -3,11 +3,12 @@ package com.veerajk.demo.services.impl;
 import com.veerajk.demo.dtos.ColumnDto;
 import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.dtos.TaskDto;
-import com.veerajk.demo.model.Board;
+import com.veerajk.demo.model.Sprint;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Task;
-import com.veerajk.demo.repo.BoardRepo;
+import com.veerajk.demo.repo.SprintRepo;
 import com.veerajk.demo.repo.ColumnRepo;
+import com.veerajk.demo.repo.TaskRepo;
 import com.veerajk.demo.services.ColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,28 +21,30 @@ import java.util.stream.Collectors;
 public class ColumnServiceImpl implements ColumnService {
 
     private ColumnRepo columnRepo;
-    private BoardRepo boardRepo;
+    private SprintRepo sprintRepo;
+    private TaskRepo taskRepo;
     private TaskServiceImpl taskService;
 
     @Autowired
-    public ColumnServiceImpl(ColumnRepo columnRepo,BoardRepo boardRepo,TaskServiceImpl taskService){
+    public ColumnServiceImpl(ColumnRepo columnRepo, SprintRepo sprintRepo, TaskServiceImpl taskService, TaskRepo taskRepo){
         this.columnRepo = columnRepo;
-        this.boardRepo = boardRepo;
+        this.sprintRepo = sprintRepo;
+        this.taskRepo = taskRepo;
         this.taskService = taskService;
     }
 
 
     public ColumnDto addColumn(ColumnDto columnDto, Long boardid){
-        Board board = boardRepo.findById(boardid).orElseThrow();
+        Sprint sprint = sprintRepo.findById(boardid).orElseThrow();
         Column column = mapToEntity(columnDto);
-        column.setBoard(board);
+        column.setSprint(sprint);
         column.setLocation(columnRepo.findMaxLocation(boardid) != null ? columnRepo.findMaxLocation(boardid) + 1 : 1);
 
         return mapColumnToDto(columnRepo.save(column));
     }
     public List<ColumnDto> getAllColumns(Long boardid) throws Exception {
-        Board board = boardRepo.findById(boardid).orElseThrow(()->new Exception("board not found!"));
-        List<Column> columns = columnRepo.findAllByBoardOrderByLocationDesc(board);
+        Sprint sprint = sprintRepo.findById(boardid).orElseThrow(()->new Exception("sprint not found!"));
+        List<Column> columns = columnRepo.findAllBySprintOrderByLocationDesc(sprint);
         List<ColumnDto> columnDtoList = columns.stream().map((column -> mapColumnToDto(column))).toList();
 
         return columnDtoList;
@@ -53,17 +56,28 @@ public class ColumnServiceImpl implements ColumnService {
         return mapColumnToDto(column);
     }
 
-    public String  removeColumn(Long id) throws Exception {
+    public String  removeColumn(Long id,Long targetid) throws Exception {
         Column column = columnRepo.findById(id).orElseThrow();
+        Column targetColumn = columnRepo.findById(targetid).orElseThrow(() -> new Exception("Target column not found!"));
+        List<Task> tasks = column.getTasks();
         if (column.getTasks().size()!= 0) {
-            throw new Exception();
+
+            tasks.forEach(task -> {
+                task.setColumn_id(targetColumn);
+            });
+
+            taskRepo.saveAll(tasks);
+            columnRepo.deleteById(id);
+
+            return "Columns deleted and Tasks moved to - "+ targetColumn.getTitle();
         }
+
         columnRepo.deleteById(id);
         return "Column deleted";
     }
 
     public List<ColumnWithoutTaskDto> getOnlyColumns(Long boardid){
-        List<Column> columns = boardRepo.findById(boardid).orElseThrow().getColumns();
+        List<Column> columns = sprintRepo.findById(boardid).orElseThrow().getColumns();
         return columns.stream().map((column -> {ColumnWithoutTaskDto col = new ColumnWithoutTaskDto(column.getId(),column.getTitle()); return col;})).collect(Collectors.toList());
     }
 

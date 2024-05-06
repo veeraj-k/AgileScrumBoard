@@ -3,10 +3,9 @@ package com.veerajk.demo.dtos;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
-public class BoardDto {
+public class SprintDto {
     private long id;
     private String name;
     private String description;

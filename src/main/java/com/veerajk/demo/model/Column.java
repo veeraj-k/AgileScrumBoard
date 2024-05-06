@@ -3,16 +3,9 @@ package com.veerajk.demo.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 
 
 @Entity
@@ -32,14 +25,15 @@ public class Column {
 
     private int location;
     
-    @JsonManagedReference
-    @OneToMany(mappedBy = "column_id", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "column_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "column_id")
     private List<Task> tasks;
 
     @ManyToOne
     @JoinColumn(name = "boardid", referencedColumnName = "id")//, nullable = false)
-    @JsonBackReference
-    private Board board;
+//    @JsonBackReference
+    private Sprint sprint;
 
     private boolean isvisible=true;
      

@@ -1,21 +1,18 @@
 package com.veerajk.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Board {
+public class Sprint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +24,7 @@ public class Board {
 
     // Relationships
 //    @JsonManagedReference
-    @OneToMany(mappedBy="board")
+    @OneToMany(mappedBy= "sprint")
     private List<Column> columns;
 
 

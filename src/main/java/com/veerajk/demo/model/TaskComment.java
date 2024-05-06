@@ -18,6 +18,10 @@ public class TaskComment {
 
     @ManyToOne
     @JoinColumn(name = "taskid",referencedColumnName = "id")
-    @JsonBackReference
+//    @JsonBackReference
     private Task taskid;
+
+    @ManyToOne
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+    private User userid;
 }

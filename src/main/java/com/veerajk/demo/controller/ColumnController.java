@@ -39,8 +39,8 @@ public class ColumnController {
 	}
 
 	@DeleteMapping("{id}")
-	public String removeColumn(@PathVariable Long id) throws Exception {
-		return columnServiceImpl.removeColumn(id);
+	public String removeColumn(@PathVariable Long id,@RequestParam Long targetid) throws Exception {
+		return columnServiceImpl.removeColumn(id,targetid);
 	}
 
 	@GetMapping("/plaincolumns")

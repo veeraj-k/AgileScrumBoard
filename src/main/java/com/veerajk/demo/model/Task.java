@@ -25,31 +25,31 @@ public class Task{
 
     private String title;
 
+    @Lob
+    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
     private String description;
 
 
     @ManyToOne
-    @JoinColumn(name = "columnid", referencedColumnName = "id")//, nullable = false)
-    @JsonBackReference //this one
+    @JoinColumn(name = "columnid", referencedColumnName = "id")
+//    @JsonBackReference
 	private Column column_id;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "taskid", cascade = CascadeType.ALL)
     private List<TaskComment> comments;
 
-    @jakarta.persistence.Column(columnDefinition = "VARCHAR_IGNORECASE")
     @Enumerated(EnumType.STRING)
     private TaskType type;
 
-    private Integer storyPoints;
+
+    private Integer storyPoints=0;
+    private boolean isvisible=true;
+
+    @ManyToOne
+    @JoinColumn(name="userid" )
+    private User user;
 
 
 
-
-    public Task(Long id,String title,String description,Column column_id){
-        this.id=id;
-        this.title=title;
-        this.description=description;
-        this.column_id=column_id;
-    }
 }
