@@ -42,7 +42,7 @@ public class SprintServiceImpl implements SprintService {
         return "Deleted sprint successfully!";
     }
 
-    private SprintDto mapToDto(Sprint sprint){
+    protected SprintDto mapToDto(Sprint sprint){
         SprintDto sprintDto = new SprintDto();
         sprintDto.setId(sprint.getId());
         sprintDto.setName(sprint.getName());
@@ -52,7 +52,7 @@ public class SprintServiceImpl implements SprintService {
         return sprintDto;
     }
 
-    private Sprint mapToEntity(SprintDto sprintDto){
+    protected Sprint mapToEntity(SprintDto sprintDto){
         Sprint sprint = new Sprint();
         sprint.setName(sprintDto.getName());
         sprint.setDescription(sprintDto.getDescription());

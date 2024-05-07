@@ -1,5 +1,9 @@
+insert into team (id,name) values (1,'UAT Team');
+insert into team (id,name) values (2,'Housing Team');
+
 --
-insert into sprint (name,description,startdate) values ('Sprint','Spring session to fix mobile app','2024-02-16');
+insert into sprint (name,description,startdate,team_id) values ('Sprint 1','Spring session to fix mobile app','2024-02-16',1);
+insert into sprint (name,description,startdate,team_id) values ('Sprint 2','I love you if this works','2024-02-16',2);
 
 -- Columns
 INSERT INTO bcolumn (title, location,sprintid,isvisible)
