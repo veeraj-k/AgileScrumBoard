@@ -22,8 +22,7 @@ public class Sprint {
 
     private String description;
 
-    // Relationships
-//    @JsonManagedReference
+
     @OneToMany(mappedBy= "sprint")
     private List<Column> columns;
 
@@ -33,5 +32,8 @@ public class Sprint {
     @jakarta.persistence.Column(columnDefinition = "integer default 15")
     private int duration;
 
+    @OneToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 }
