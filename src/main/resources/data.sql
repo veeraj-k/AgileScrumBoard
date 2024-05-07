@@ -2,7 +2,7 @@
 insert into sprint (name,description,startdate) values ('Sprint','Spring session to fix mobile app','2024-02-16');
 
 -- Columns
-INSERT INTO bcolumn (title, location,boardid,isvisible)
+INSERT INTO bcolumn (title, location,sprintid,isvisible)
 SELECT 'To Do', 4, id,true FROM sprint WHERE name='Sprint'
 UNION
 SELECT 'In Progress', 3, id,true FROM sprint WHERE name='Sprint'

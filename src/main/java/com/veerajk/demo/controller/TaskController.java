@@ -1,13 +1,8 @@
 package com.veerajk.demo.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.veerajk.demo.dtos.ColumnWithoutTaskDto;
 import com.veerajk.demo.dtos.TaskDto;
-import com.veerajk.demo.model.Column;
 import com.veerajk.demo.requests.MoveTaskRequest;
-import com.veerajk.demo.requests.TaskRequest;
 import com.veerajk.demo.services.impl.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.veerajk.demo.repo.*;
-import com.veerajk.demo.model.Task;
 
 @RestController
 @RequestMapping("api/boards/")
@@ -33,7 +27,7 @@ public class TaskController {
 	@Autowired
 	TaskServiceImpl taskServiceImpl;
 
-	@PostMapping("{boardid}/columns/{columnid}/tasks/user/{userid}")
+	@PostMapping("{sprintid}/columns/{columnid}/tasks/user/{userid}")
 	public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskreq , @PathVariable Long columnid,@PathVariable Long userid) throws Exception{
 		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid,userid), HttpStatus.CREATED);
 	}

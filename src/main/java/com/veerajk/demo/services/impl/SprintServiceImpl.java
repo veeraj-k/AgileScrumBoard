@@ -30,7 +30,7 @@ public class SprintServiceImpl implements SprintService {
 
     public List<SprintDto> getAllSprints() {
         List<Sprint> sprintList = sprintRepo.findAll();
-        List<SprintDto> sprintDtos = sprintList.stream().map((board -> mapToDto(board))).toList();
+        List<SprintDto> sprintDtos = sprintList.stream().map((sprint -> mapToDto(sprint))).toList();
 
         return sprintDtos;
     }

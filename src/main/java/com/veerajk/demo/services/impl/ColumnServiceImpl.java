@@ -34,16 +34,16 @@ public class ColumnServiceImpl implements ColumnService {
     }
 
 
-    public ColumnDto addColumn(ColumnDto columnDto, Long boardid){
-        Sprint sprint = sprintRepo.findById(boardid).orElseThrow();
+    public ColumnDto addColumn(ColumnDto columnDto, Long sprintid){
+        Sprint sprint = sprintRepo.findById(sprintid).orElseThrow();
         Column column = mapToEntity(columnDto);
         column.setSprint(sprint);
-        column.setLocation(columnRepo.findMaxLocation(boardid) != null ? columnRepo.findMaxLocation(boardid) + 1 : 1);
+        column.setLocation(columnRepo.findMaxLocation(sprintid) != null ? columnRepo.findMaxLocation(sprintid) + 1 : 1);
 
         return mapColumnToDto(columnRepo.save(column));
     }
-    public List<ColumnDto> getAllColumns(Long boardid) throws Exception {
-        Sprint sprint = sprintRepo.findById(boardid).orElseThrow(()->new Exception("sprint not found!"));
+    public List<ColumnDto> getAllColumns(Long sprintid) throws Exception {
+        Sprint sprint = sprintRepo.findById(sprintid).orElseThrow(()->new Exception("sprint not found!"));
         List<Column> columns = columnRepo.findAllBySprintOrderByLocationDesc(sprint);
         List<ColumnDto> columnDtoList = columns.stream().map((column -> mapColumnToDto(column))).toList();
 
@@ -76,8 +76,8 @@ public class ColumnServiceImpl implements ColumnService {
         return "Column deleted";
     }
 
-    public List<ColumnWithoutTaskDto> getOnlyColumns(Long boardid){
-        List<Column> columns = sprintRepo.findById(boardid).orElseThrow().getColumns();
+    public List<ColumnWithoutTaskDto> getOnlyColumns(Long sprintid){
+        List<Column> columns = sprintRepo.findById(sprintid).orElseThrow().getColumns();
         return columns.stream().map((column -> {ColumnWithoutTaskDto col = new ColumnWithoutTaskDto(column.getId(),column.getTitle()); return col;})).collect(Collectors.toList());
     }
 
