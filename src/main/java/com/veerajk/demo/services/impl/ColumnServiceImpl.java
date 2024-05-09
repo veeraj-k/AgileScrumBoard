@@ -6,9 +6,11 @@ import com.veerajk.demo.dtos.TaskDto;
 import com.veerajk.demo.model.Sprint;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Task;
+import com.veerajk.demo.model.Team;
 import com.veerajk.demo.repo.SprintRepo;
 import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.TaskRepo;
+import com.veerajk.demo.repo.TeamRepo;
 import com.veerajk.demo.services.ColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,16 @@ public class ColumnServiceImpl implements ColumnService {
     private SprintRepo sprintRepo;
     private TaskRepo taskRepo;
     private TaskServiceImpl taskService;
+    private final TeamRepo teamRepo;
 
     @Autowired
-    public ColumnServiceImpl(ColumnRepo columnRepo, SprintRepo sprintRepo, TaskServiceImpl taskService, TaskRepo taskRepo){
+    public ColumnServiceImpl(ColumnRepo columnRepo, SprintRepo sprintRepo, TaskServiceImpl taskService, TaskRepo taskRepo,
+                             TeamRepo teamRepo){
         this.columnRepo = columnRepo;
         this.sprintRepo = sprintRepo;
         this.taskRepo = taskRepo;
         this.taskService = taskService;
+        this.teamRepo = teamRepo;
     }
 
 
@@ -42,8 +47,12 @@ public class ColumnServiceImpl implements ColumnService {
         column.setIsdone(false);
         return mapColumnToDto(columnRepo.save(column));
     }
-    public List<ColumnDto> getAllColumns(Long sprintid) throws Exception {
-        Sprint sprint = sprintRepo.findById(sprintid).orElseThrow(()->new Exception("sprint not found!"));
+    public List<ColumnDto> getAllColumns(Long teamid) throws Exception {
+        Team team = teamRepo.findById(teamid).orElseThrow(()->new Exception("Team not found!"));
+        Sprint sprint = team.getSprint();
+        if(sprint == null){
+            throw new Exception("Active sprint not found!");
+        }
         List<Column> columns = columnRepo.findAllBySprintOrderByLocationDesc(sprint);
         List<ColumnDto> columnDtoList = columns.stream().map((column -> mapColumnToDto(column))).toList();
 

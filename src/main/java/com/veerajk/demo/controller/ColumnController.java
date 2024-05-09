@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
-@RequestMapping("api/teams/{teamid}/sprint/{sprintid}/columns")
+@RequestMapping("api/teams/{teamid}/sprint/columns")
 public class ColumnController {
 
 	@Autowired
@@ -25,8 +25,8 @@ public class ColumnController {
 
 
 	@GetMapping
-	public ResponseEntity<List<ColumnDto>> getAllColumns(@PathVariable Long sprintid) throws Exception {
-		return ResponseEntity.ok(columnServiceImpl.getAllColumns(sprintid));
+	public ResponseEntity<List<ColumnDto>> getAllColumns(@PathVariable Long teamid) throws Exception {
+		return ResponseEntity.ok(columnServiceImpl.getAllColumns(teamid));
 	}
 
 	@GetMapping("{id}")
