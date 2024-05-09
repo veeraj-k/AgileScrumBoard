@@ -19,11 +19,11 @@ public class SprintController {
     @Autowired
     SprintServiceImpl sprintService;
 
-    @PostMapping("/sprints/startSprint")
+    @PostMapping("/sprint/startSprint")
     public ResponseEntity<SprintDto> addSprint(@RequestBody SprintDto sprintDto,@PathVariable Long teamid){
         return new ResponseEntity<>(sprintService.addSprint(sprintDto,teamid), HttpStatus.CREATED);
     }
-    @GetMapping("/sprints")
+    @GetMapping("/sprint")
     public  ResponseEntity<SprintDto> getSprint(@PathVariable Long teamid) throws Exception {
 
         return ResponseEntity.ok(sprintService.getSprint(teamid));

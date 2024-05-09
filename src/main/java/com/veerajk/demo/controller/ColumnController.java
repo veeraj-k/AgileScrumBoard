@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
-@RequestMapping("api/boards/{sprintid}/columns")
+@RequestMapping("api/teams/{teamid}/sprint/{sprintid}/columns")
 public class ColumnController {
 
 	@Autowired

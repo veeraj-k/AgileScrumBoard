@@ -16,24 +16,25 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000/")
+@RequestMapping("/api/teams/{teamid}/sprint/columns/tasks")
 public class CommentController {
 
 
     @Autowired
     CommentServiceImpl commentService;
 
-    @PostMapping("/api/boards/{boardid}/columns/tasks/{taskid}/comments")
+    @PostMapping("/{taskid}/comments")
     public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto,@PathVariable Long taskid) throws Exception {
 
         return  new ResponseEntity<>(commentService.addComment(commentDto,taskid), HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/boards/{boardid}/columns/tasks/{taskid}/comments")
+    @GetMapping("/{taskid}/comments")
     public ResponseEntity<List<CommentDto>> getTaskComments(@PathVariable Long taskid) throws Exception{
         return ResponseEntity.ok(commentService.getTaskComments(taskid));
     }
 
-    @DeleteMapping("/api/boards/columns/tasks/comments/{id}")
+    @DeleteMapping("/comments/{id}")
     public ResponseEntity removeComment(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(commentService.removeComment(id));
     }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.veerajk.demo.repo.*;
 
 @RestController
-@RequestMapping("api/boards/")
+@RequestMapping("api/teams/{teamid}/sprint/columns")
 @CrossOrigin("http://localhost:3000/")
 public class TaskController {
 
@@ -27,16 +27,16 @@ public class TaskController {
 	@Autowired
 	TaskServiceImpl taskServiceImpl;
 
-	@PostMapping("{sprintid}/columns/{columnid}/tasks/user/{userid}")
+	@PostMapping("/{columnid}/tasks/user/{userid}")
 	public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskreq , @PathVariable Long columnid,@PathVariable Long userid) throws Exception{
 		return new ResponseEntity<>(taskServiceImpl.addTask(taskreq,columnid,userid), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/columns/tasks/{id}/editTitle")
+	@PutMapping("/tasks/{id}/editTitle")
 	public ResponseEntity<String> editTaskTitle(@PathVariable Long id,@RequestBody String newTitle) throws Exception {
 		return ResponseEntity.ok(taskServiceImpl.editTaskTitle(id,newTitle));
 	}
-	@PutMapping("/columns/tasks/{id}/editDescription")
+	@PutMapping("/tasks/{id}/editDescription")
 	public ResponseEntity<String> editTaskDescription(@PathVariable Long id,@RequestBody String newDescription) throws Exception {
 		return ResponseEntity.ok(taskServiceImpl.editTaskDescription(id,newDescription));
 	}
@@ -46,7 +46,7 @@ public class TaskController {
 //		return taskServiceImpl.getAlltasks();
 //	}
 	
-	@GetMapping("columns/tasks/{id}")
+	@GetMapping("/tasks/{id}")
 	public ResponseEntity<TaskDto> getTask(@PathVariable Long id) throws Exception {
 		return ResponseEntity.ok(taskServiceImpl.getTask(id));
 	}
@@ -62,18 +62,18 @@ public class TaskController {
 //		return taskServiceImpl.getBoardTasks(boardid);
 //	}
 //
-	@DeleteMapping("columns/tasks/{taskid}")
+	@DeleteMapping("/tasks/{taskid}")
 	public ResponseEntity<String> removeTask(@PathVariable Long taskid) throws Exception{
 		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
 
 	}
-	@PutMapping("columns/tasks/movetask")
+	@PutMapping("/columns/tasks/movetask")
 	public ResponseEntity<TaskDto> moveTask(@RequestBody MoveTaskRequest moveTaskRequest) throws Exception {
 
 		return ResponseEntity.ok(taskServiceImpl.moveTask(moveTaskRequest));
 	}
 
-	@GetMapping("columns/tasks/{id}/getColumn")
+	@GetMapping("/columns/tasks/{id}/getColumn")
 	public ResponseEntity<ColumnWithoutTaskDto> getColumnOfTask(@PathVariable Long id){
 		return ResponseEntity.ok(taskServiceImpl.getColumnOfTask(id));
 	}
