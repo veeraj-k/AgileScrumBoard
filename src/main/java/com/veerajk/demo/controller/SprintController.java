@@ -13,28 +13,28 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:3000/")
 @Controller
-@RequestMapping("api/boards")
+@RequestMapping("api/teams/{teamid}")
 public class SprintController {
 
     @Autowired
     SprintServiceImpl sprintService;
 
-    @PostMapping("{teamid}/startSprint")
+    @PostMapping("/sprints/startSprint")
     public ResponseEntity<SprintDto> addSprint(@RequestBody SprintDto sprintDto,@PathVariable Long teamid){
         return new ResponseEntity<>(sprintService.addSprint(sprintDto,teamid), HttpStatus.CREATED);
     }
-    @GetMapping("{sprintid}")
-    public  ResponseEntity<SprintDto> getSprint(@PathVariable Long sprintid) throws Exception {
+    @GetMapping("/sprints")
+    public  ResponseEntity<SprintDto> getSprint(@PathVariable Long teamid) throws Exception {
 
-        return ResponseEntity.ok(sprintService.getSprint(sprintid));
+        return ResponseEntity.ok(sprintService.getSprint(teamid));
     }
 
-    @GetMapping
-    public  ResponseEntity<List<SprintDto>> getAllSprints(){
-        return ResponseEntity.ok(sprintService.getAllSprints());
-    }
+//    @GetMapping
+//    public  ResponseEntity<List<SprintDto>> getAllSprints(){
+//        return ResponseEntity.ok(sprintService.getAllSprints());
+//    }
 
-    @DeleteMapping("{sprintid}")
+    @DeleteMapping("/sprint/{sprintid}")
     public ResponseEntity<String> deleteSprint(@PathVariable Long sprintid) throws Exception {
         return ResponseEntity.ok(sprintService.deleteSprint(sprintid));
     }

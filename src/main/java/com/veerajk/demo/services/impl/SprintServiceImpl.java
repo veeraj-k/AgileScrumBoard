@@ -3,6 +3,7 @@ package com.veerajk.demo.services.impl;
 import com.veerajk.demo.dtos.SprintDto;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Sprint;
+import com.veerajk.demo.model.Team;
 import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.SprintRepo;
 import com.veerajk.demo.repo.TeamRepo;
@@ -30,6 +31,7 @@ public class SprintServiceImpl implements SprintService {
         column.setTitle("Done");
         column.setLocation(1);
         column.setSprint(sprint); // Set the Sprint reference for the Column
+        column.setIsdone(true);
 
         List<Column> columns = new ArrayList<>();
         columns.add(column);
@@ -42,8 +44,12 @@ public class SprintServiceImpl implements SprintService {
         return sprintDtoRes;
     }
 
-    public SprintDto getSprint(Long id) throws Exception {
-        Sprint sprint = sprintRepo.findById(id).orElseThrow(() -> new Exception("Sprint not found"));
+    public SprintDto getSprint(Long teamid) throws Exception {
+        Team team = teamRepo.findById(teamid).orElseThrow(() -> new Exception("Team not found"));
+        Sprint sprint = team.getSprint();
+        if (sprint == null){
+            throw  new Exception("No active sprints!");
+        }
         SprintDto sprintDto = mapToDto(sprint);
         return sprintDto;
     }

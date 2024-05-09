@@ -7,7 +7,7 @@ import java.util.List;
 public interface SprintService {
 
     SprintDto addSprint(SprintDto sprintDto,Long teamid);
-    SprintDto getSprint(Long id) throws Exception;
+    SprintDto getSprint(Long teamid) throws Exception;
     List<SprintDto> getAllSprints();
     String deleteSprint(Long id) throws Exception;
 }
