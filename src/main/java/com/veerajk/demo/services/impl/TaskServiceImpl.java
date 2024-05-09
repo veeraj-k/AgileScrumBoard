@@ -57,6 +57,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = mapToEntity(taskRequestDto);
         task.setUser(userRepo.findById(userid).get());
         task.setColumn_id(column);
+        task.setIscompleted(column.isIsdone());
         TaskDto taskResponseDto = mapTaskToDto(taskRepo.save(task));
         return taskResponseDto;
     }

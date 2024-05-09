@@ -19,8 +19,8 @@ public class ColumnController {
 	ColumnServiceImpl columnServiceImpl;
 
 	@PostMapping
-	public ResponseEntity<ColumnDto> addColumn(@RequestBody ColumnDto columnDto, @PathVariable Long sprintid){
-		return new ResponseEntity<>(columnServiceImpl.addColumn(columnDto, sprintid), HttpStatus.CREATED);
+	public ResponseEntity<ColumnDto> addColumn(@RequestBody ColumnDto columnDto, @PathVariable Long teamid) throws Exception {
+		return new ResponseEntity<>(columnServiceImpl.addColumn(columnDto, teamid), HttpStatus.CREATED);
 	}
 
 

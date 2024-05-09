@@ -39,11 +39,16 @@ public class ColumnServiceImpl implements ColumnService {
     }
 
 
-    public ColumnDto addColumn(ColumnDto columnDto, Long sprintid){
-        Sprint sprint = sprintRepo.findById(sprintid).orElseThrow();
+    public ColumnDto addColumn(ColumnDto columnDto, Long teamid) throws Exception {
+        Team team = teamRepo.findById(teamid).orElseThrow(()->new Exception("Team not found!"));
+        Sprint sprint = team.getSprint();
+        if(sprint == null){
+            throw new Exception("Active sprint not found!");
+        }
+//        Sprint sprint = sprintRepo.findById(sprintid).orElseThrow();
         Column column = mapToEntity(columnDto);
         column.setSprint(sprint);
-        column.setLocation(columnRepo.findMaxLocation(sprintid) != null ? columnRepo.findMaxLocation(sprintid) + 1 : 1);
+        column.setLocation(columnRepo.findMaxLocation(sprint.getId()) != null ? columnRepo.findMaxLocation(sprint.getId()) + 1 : 1);
         column.setIsdone(false);
         return mapColumnToDto(columnRepo.save(column));
     }
