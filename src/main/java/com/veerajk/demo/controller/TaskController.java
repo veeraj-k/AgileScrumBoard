@@ -16,13 +16,13 @@ import com.veerajk.demo.repo.*;
 @CrossOrigin("http://localhost:3000/")
 public class TaskController {
 
-	
-	@Autowired
-	TaskRepo taskRepo;
-	@Autowired
-	ColumnRepo columnRepo;
-	@Autowired
-	TaskCommentRepo taskCommentRepo;
+//
+//	@Autowired
+//	TaskRepo taskRepo;
+//	@Autowired
+//	ColumnRepo columnRepo;
+//	@Autowired
+//	TaskCommentRepo taskCommentRepo;
 
 	@Autowired
 	TaskServiceImpl taskServiceImpl;
@@ -67,13 +67,13 @@ public class TaskController {
 		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
 
 	}
-	@PutMapping("/columns/tasks/movetask")
+	@PutMapping("/tasks/movetask")
 	public ResponseEntity<TaskDto> moveTask(@RequestBody MoveTaskRequest moveTaskRequest) throws Exception {
 
 		return ResponseEntity.ok(taskServiceImpl.moveTask(moveTaskRequest));
 	}
 
-	@GetMapping("/columns/tasks/{id}/getColumn")
+	@GetMapping("/tasks/{id}/getColumn")
 	public ResponseEntity<ColumnWithoutTaskDto> getColumnOfTask(@PathVariable Long id){
 		return ResponseEntity.ok(taskServiceImpl.getColumnOfTask(id));
 	}
