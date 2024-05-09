@@ -39,7 +39,7 @@ public class ColumnServiceImpl implements ColumnService {
         Column column = mapToEntity(columnDto);
         column.setSprint(sprint);
         column.setLocation(columnRepo.findMaxLocation(sprintid) != null ? columnRepo.findMaxLocation(sprintid) + 1 : 1);
-
+        column.setIsdone(false);
         return mapColumnToDto(columnRepo.save(column));
     }
     public List<ColumnDto> getAllColumns(Long sprintid) throws Exception {

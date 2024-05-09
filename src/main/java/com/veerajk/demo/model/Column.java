@@ -37,5 +37,7 @@ public class Column {
     private Sprint sprint;
 
     private boolean isvisible=true;
+    @jakarta.persistence.Column(columnDefinition = "boolean default false")
+    private boolean isdone;
      
 }
