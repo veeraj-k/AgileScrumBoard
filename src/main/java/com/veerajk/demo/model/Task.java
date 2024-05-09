@@ -49,6 +49,8 @@ public class Task{
     @ManyToOne
     @JoinColumn(name="userid" )
     private User user;
+    @jakarta.persistence.Column(columnDefinition = "boolean default false")
+    private boolean iscompleted;
 
 
 

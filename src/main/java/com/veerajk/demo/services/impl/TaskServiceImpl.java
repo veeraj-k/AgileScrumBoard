@@ -101,6 +101,7 @@ public class TaskServiceImpl implements TaskService {
         Column column = columnRepo.findById(taskRequest.getColumn_id()).orElseThrow(()-> new Exception("Specified column not found!"));
         Task task = taskRepo.findById(taskRequest.getId()).orElseThrow(()-> new Exception("Task not found!"));
         task.setColumn_id(column);
+        task.setIscompleted(column.isIsdone());
         Task updatedtask = taskRepo.save(task);
         return mapTaskToDto(updatedtask);
     }
