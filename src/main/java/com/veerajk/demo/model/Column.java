@@ -31,7 +31,8 @@ public class Column {
     private List<Task> tasks;
 
     @ManyToOne
-    @JoinColumn(name = "sprintid", referencedColumnName = "id")//, nullable = false)
+    @JoinColumn(name = "sprintid")//, nullable = false)
+//    @JoinColumn(name = "sprintid", referencedColumnName = "id")//, nullable = false)
 //    @JsonBackReference
     private Sprint sprint;
 

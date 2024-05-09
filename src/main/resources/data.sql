@@ -1,19 +1,20 @@
 insert into team (id,name) values (1,'UAT Team');
 insert into team (id,name) values (2,'Housing Team');
+insert into team (id,name) values (3,'Dummy Team');
 
 --
-insert into sprint (name,description,startdate,team_id) values ('Sprint 1','Spring session to fix mobile app','2024-02-16',1);
-insert into sprint (name,description,startdate,team_id) values ('Sprint 2','I love you if this works','2024-02-16',2);
+insert into sprint (name,description,startdate,team_id) values ('Sprint 1','Working on Kotlin to Fix mobile','2024-02-16',1);
+insert into sprint (name,description,startdate,team_id) values ('Sprint 2','Working on next feature','2024-02-16',2);
 
 -- Columns
 INSERT INTO bcolumn (title, location,sprintid,isvisible)
-SELECT 'To Do', 4, id,true FROM sprint WHERE name='Sprint'
+SELECT 'To Do', 4, id,true FROM sprint WHERE name='Sprint 1'
 UNION
-SELECT 'In Progress', 3, id,true FROM sprint WHERE name='Sprint'
+SELECT 'In Progress', 3, id,true FROM sprint WHERE name='Sprint 1'
 UNION
-SELECT 'In Review', 2, id,true FROM sprint WHERE name='Sprint'
+SELECT 'In Review', 2, id,true FROM sprint WHERE name='Sprint 1'
 UNION
-SELECT 'Done', 1, id,true FROM sprint WHERE name='Sprint';
+SELECT 'Done', 1, id,true FROM sprint WHERE name='Sprint 1';
 
 -- inserting users
 

@@ -1,12 +1,16 @@
 package com.veerajk.demo.services.impl;
 
 import com.veerajk.demo.dtos.SprintDto;
+import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Sprint;
+import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.SprintRepo;
+import com.veerajk.demo.repo.TeamRepo;
 import com.veerajk.demo.services.SprintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +18,24 @@ public class SprintServiceImpl implements SprintService {
     @Autowired
     SprintRepo sprintRepo;
 
-    public SprintDto addSprint(SprintDto sprintDto){
+    @Autowired
+    TeamRepo teamRepo;
+
+    public SprintDto addSprint(SprintDto sprintDto,Long teamid){
         Sprint sprint = mapToEntity(sprintDto);
+
+        sprint.setTeam(teamRepo.findById(teamid).orElseThrow());
+
+        Column column = new Column();
+        column.setTitle("Done");
+        column.setLocation(1);
+        column.setSprint(sprint); // Set the Sprint reference for the Column
+
+        List<Column> columns = new ArrayList<>();
+        columns.add(column);
+        sprint.setColumns(columns);
+        sprint.setColumns(columns);
+
         Sprint sprintRes = sprintRepo.save(sprint);
         SprintDto sprintDtoRes = mapToDto(sprintRes);
 

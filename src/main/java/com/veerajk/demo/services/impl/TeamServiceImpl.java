@@ -1,5 +1,6 @@
 package com.veerajk.demo.services.impl;
 
+import com.veerajk.demo.dtos.SprintDto;
 import com.veerajk.demo.dtos.TeamDto;
 import com.veerajk.demo.model.Team;
 import com.veerajk.demo.repo.TeamRepo;
@@ -35,7 +36,7 @@ public class TeamServiceImpl implements TeamService {
         TeamDto teamDto = new TeamDto();
         teamDto.setId(team.getId());
         teamDto.setName(team.getName());
-        teamDto.setSprint(sprintService.mapToDto(team.getSprint()));
+        teamDto.setSprint(team.getSprint()!=null ?sprintService.mapToDto(team.getSprint()):null);
         return teamDto;
     }
     protected Team mapToEntity(TeamDto teamDto){

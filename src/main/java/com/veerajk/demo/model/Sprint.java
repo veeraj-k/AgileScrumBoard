@@ -23,7 +23,7 @@ public class Sprint {
     private String description;
 
 
-    @OneToMany(mappedBy= "sprint")
+    @OneToMany(mappedBy= "sprint",cascade = CascadeType.ALL)
     private List<Column> columns;
 
 

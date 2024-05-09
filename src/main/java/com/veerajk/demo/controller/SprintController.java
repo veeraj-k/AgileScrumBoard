@@ -19,9 +19,9 @@ public class SprintController {
     @Autowired
     SprintServiceImpl sprintService;
 
-    @PostMapping
-    public ResponseEntity<SprintDto> addSprint(@RequestBody SprintDto sprintDto){
-        return new ResponseEntity<>(sprintService.addSprint(sprintDto), HttpStatus.CREATED);
+    @PostMapping("{teamid}/startSprint")
+    public ResponseEntity<SprintDto> addSprint(@RequestBody SprintDto sprintDto,@PathVariable Long teamid){
+        return new ResponseEntity<>(sprintService.addSprint(sprintDto,teamid), HttpStatus.CREATED);
     }
     @GetMapping("{sprintid}")
     public  ResponseEntity<SprintDto> getSprint(@PathVariable Long sprintid) throws Exception {
