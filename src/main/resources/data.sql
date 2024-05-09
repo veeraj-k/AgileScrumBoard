@@ -12,9 +12,10 @@ SELECT 'To Do', 4, id,true FROM sprint WHERE name='Sprint 1'
 UNION
 SELECT 'In Progress', 3, id,true FROM sprint WHERE name='Sprint 1'
 UNION
-SELECT 'In Review', 2, id,true FROM sprint WHERE name='Sprint 1'
-UNION
-SELECT 'Done', 1, id,true FROM sprint WHERE name='Sprint 1';
+SELECT 'In Review', 2, id,true FROM sprint WHERE name='Sprint 1';
+-- UNION
+INSERT INTO bcolumn (title, location,sprintid,isvisible,isdone)
+SELECT 'Done', 1, id,true,true FROM sprint WHERE name='Sprint 1';
 
 -- inserting users
 
@@ -41,7 +42,7 @@ INSERT INTO task (title, description, type, story_points, columnid, isvisible, u
 SELECT 'Review Order Workflow', 'Validate status changes', 'Bug', 0, id, true, 5 FROM bcolumn WHERE title = 'In Review';
 
 INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 6 FROM bcolumn WHERE title = 'Done';
+SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 6 FROM bcolumn WHERE title = 'In Progress';
 
 INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
 SELECT 'Improve Onboarding', 'Guide new users', 'Story', 3, id, true, 1 FROM bcolumn WHERE title='To Do';
@@ -53,7 +54,7 @@ INSERT INTO task (title, description, type, story_points, columnid, isvisible, u
 SELECT 'Review Transaction Logs', 'Check for errors', 'Bug', 0, id, true, 3 FROM bcolumn WHERE title='In Review';
 
 INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 4 FROM bcolumn WHERE title='Done';
+SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 4 FROM bcolumn WHERE title='In Progress';
 
 -- Task Comments
 INSERT INTO task_comment (taskid, description,user_id)

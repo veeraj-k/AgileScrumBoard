@@ -1,10 +1,10 @@
 package com.veerajk.demo.services.impl;
 
 import com.veerajk.demo.dtos.SprintDto;
+import com.veerajk.demo.dtos.SprintTaskCountResponse;
 import com.veerajk.demo.model.Column;
 import com.veerajk.demo.model.Sprint;
 import com.veerajk.demo.model.Team;
-import com.veerajk.demo.repo.ColumnRepo;
 import com.veerajk.demo.repo.SprintRepo;
 import com.veerajk.demo.repo.TeamRepo;
 import com.veerajk.demo.services.SprintService;
@@ -68,6 +68,30 @@ public class SprintServiceImpl implements SprintService {
         return "Deleted sprint successfully!";
     }
 
+    @Override
+    public SprintTaskCountResponse getTaskCounts(Long teamid) throws Exception{
+        Team team = teamRepo.findById(teamid).orElseThrow();
+        Sprint sprint = team.getSprint();
+        if(sprint==null){
+            throw new Exception("No active Sprints");
+        }
+        long completedTasksCount = 0;
+        long remainingTasksCount = 0;
+
+        // Iterate over the columns in the sprint
+        for (Column column : sprint.getColumns()) {
+            completedTasksCount += column.getTasks().stream()
+                    .filter(task -> task.isIscompleted())
+                    .count();
+
+            remainingTasksCount += column.getTasks().stream()
+                    .filter(task -> !task.isIscompleted())
+                    .count();
+        }
+
+        return new SprintTaskCountResponse(completedTasksCount, remainingTasksCount);
+
+    }
     protected SprintDto mapToDto(Sprint sprint){
         SprintDto sprintDto = new SprintDto();
         sprintDto.setId(sprint.getId());
