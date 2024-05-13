@@ -13,4 +13,6 @@ public interface SprintService {
     String deleteSprint(Long id) throws Exception;
 
     SprintTaskCountResponse getTaskCounts(Long teamid) throws Exception;
+
+    String completeSprintAndMoveTasksToBacklog(Long teamId) throws Exception;
 }

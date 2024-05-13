@@ -8,6 +8,7 @@ import com.veerajk.demo.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -36,7 +37,7 @@ public class Task{
 	private Column column_id;
 
 //    @JsonManagedReference
-    @OneToMany(mappedBy = "taskid", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "taskid", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     private List<TaskComment> comments;
 
     @Enumerated(EnumType.STRING)
@@ -52,6 +53,8 @@ public class Task{
     @jakarta.persistence.Column(columnDefinition = "boolean default false")
     private boolean iscompleted;
 
+    private Date created;
+    private Date updated;
 
 
 }

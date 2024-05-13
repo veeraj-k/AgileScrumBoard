@@ -40,7 +40,7 @@ public class ColumnController {
 	}
 
 	@GetMapping("/plaincolumns")
-	public ResponseEntity<List<ColumnWithoutTaskDto>> getColumnsWithoutTasks(@PathVariable Long sprintid){
-		return ResponseEntity.ok(columnServiceImpl.getOnlyColumns(sprintid));
+	public ResponseEntity<List<ColumnWithoutTaskDto>> getColumnsWithoutTasks(@PathVariable Long teamid) throws Exception {
+		return ResponseEntity.ok(columnServiceImpl.getOnlyColumns(teamid));
 	}
 }

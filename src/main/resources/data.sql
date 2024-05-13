@@ -2,9 +2,12 @@ insert into team (id,name) values (1,'UAT Team');
 insert into team (id,name) values (2,'Housing Team');
 insert into team (id,name) values (3,'Dummy Team');
 
+insert into backlog (id,team_id) values (1,1);
+insert into backlog (id,team_id) values (2,2);
+insert into backlog (id,team_id) values (3,3);
 --
-insert into sprint (name,description,startdate,team_id) values ('Sprint 1','Working on Kotlin to Fix mobile','2024-02-16',1);
-insert into sprint (name,description,startdate,team_id) values ('Sprint 2','Working on next feature','2024-02-16',2);
+insert into sprint (name,description,startdate,enddate,team_id) values ('Sprint 1','Working on Kotlin to Fix mobile','2024-02-16','2024-05-16',1);
+insert into sprint (name,description,startdate,enddate,team_id) values ('Sprint 2','Working on next feature','2024-02-16','2024-05-20',2);
 
 -- Columns
 INSERT INTO bcolumn (title, location,sprintid,isvisible)
@@ -16,6 +19,8 @@ SELECT 'In Review', 2, id,true FROM sprint WHERE name='Sprint 1';
 -- UNION
 INSERT INTO bcolumn (title, location,sprintid,isvisible,isdone)
 SELECT 'Done', 1, id,true,true FROM sprint WHERE name='Sprint 1';
+INSERT INTO bcolumn (title, location,sprintid,isvisible,isdone)
+SELECT 'Done', 1, id,true,true FROM sprint WHERE name='Sprint 2';
 
 -- inserting users
 
@@ -26,35 +31,64 @@ insert into users_agile(name) values ('Veeraj'),('Yashwant'),('Vinay'),('Surya')
 
 --     adding users to tasks
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Improve Navbar', 'Make dropdowns responsive', 'Story', 3, id, true, 1 FROM bcolumn WHERE title = 'To Do';
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Improve Navbar', 'Make dropdowns responsive', 'Story', 3, id, true, 1 FROM bcolumn WHERE title = 'To Do';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'User Dashboard', 'Add reports section', 'Story', 5, id, true, 2 FROM bcolumn WHERE title = 'To Do';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Payment Integrations', 'Research Stripe', 'Spike', 0, id, true, 3 FROM bcolumn WHERE title = 'In Progress';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'New API Endpoints', 'Add customer APIs', 'Story', 8, id, true, 4 FROM bcolumn WHERE title = 'In Progress';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Review Order Workflow', 'Validate status changes', 'Bug', 0, id, true, 5 FROM bcolumn WHERE title = 'In Review';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 6 FROM bcolumn WHERE title = 'In Progress';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Improve Onboarding', 'Guide new users', 'Story', 3, id, true, 1 FROM bcolumn WHERE title='To Do';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'New Dashboard Charts', 'Add sales metrics charts', 'Story', 5, id, true, 2 FROM bcolumn WHERE title='In Progress';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Review Transaction Logs', 'Check for errors', 'Bug', 0, id, true, 3 FROM bcolumn WHERE title='In Review';
+--
+-- INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
+-- SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 4 FROM bcolumn WHERE title='In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Improve Navbar', 'Make dropdowns responsive', 'Story', 3, id, true, 1, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'To Do';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'User Dashboard', 'Add reports section', 'Story', 5, id, true, 2 FROM bcolumn WHERE title = 'To Do';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'User Dashboard', 'Add reports section', 'Story', 5, id, true, 2, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'To Do';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Payment Integrations', 'Research Stripe', 'Spike', 0, id, true, 3 FROM bcolumn WHERE title = 'In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Payment Integrations', 'Research Stripe', 'Spike', 0, id, true, 3, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'In Progress';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'New API Endpoints', 'Add customer APIs', 'Story', 8, id, true, 4 FROM bcolumn WHERE title = 'In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'New API Endpoints', 'Add customer APIs', 'Story', 8, id, true, 4, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'In Progress';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Review Order Workflow', 'Validate status changes', 'Bug', 0, id, true, 5 FROM bcolumn WHERE title = 'In Review';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Review Order Workflow', 'Validate status changes', 'Bug', 0, id, true, 5, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'In Review';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 6 FROM bcolumn WHERE title = 'In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 6, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title = 'In Progress';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Improve Onboarding', 'Guide new users', 'Story', 3, id, true, 1 FROM bcolumn WHERE title='To Do';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Improve Onboarding', 'Guide new users', 'Story', 3, id, true, 1, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title='To Do';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'New Dashboard Charts', 'Add sales metrics charts', 'Story', 5, id, true, 2 FROM bcolumn WHERE title='In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'New Dashboard Charts', 'Add sales metrics charts', 'Story', 5, id, true, 2, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title='In Progress';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Review Transaction Logs', 'Check for errors', 'Bug', 0, id, true, 3 FROM bcolumn WHERE title='In Review';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Review Transaction Logs', 'Check for errors', 'Bug', 0, id, true, 3, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title='In Review';
 
-INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid)
-SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 4 FROM bcolumn WHERE title='In Progress';
+INSERT INTO task (title, description, type, story_points, columnid, isvisible, userid, created, updated)
+SELECT 'Resolved Account Creation Issue', 'Fixed sign up bugs', 'Bug', 0, id, true, 4, '2024-03-01 13:23:44', '2024-03-01 13:23:44' FROM bcolumn WHERE title='In Progress';
 
 -- Task Comments
 INSERT INTO task_comment (taskid, description,user_id)

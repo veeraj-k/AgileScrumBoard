@@ -2,6 +2,8 @@ package com.veerajk.demo.controller;
 
 import com.veerajk.demo.dtos.SprintDto;
 import com.veerajk.demo.dtos.SprintTaskCountResponse;
+import com.veerajk.demo.model.Sprint;
+import com.veerajk.demo.repo.SprintRepo;
 import com.veerajk.demo.services.impl.SprintServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class SprintController {
     @Autowired
     SprintServiceImpl sprintService;
 
-    @PostMapping("/sprint/startSprint")
+    @PostMapping("/sprint/start")
     public ResponseEntity<SprintDto> addSprint(@RequestBody SprintDto sprintDto,@PathVariable Long teamid){
         return new ResponseEntity<>(sprintService.addSprint(sprintDto,teamid), HttpStatus.CREATED);
     }
@@ -35,13 +37,18 @@ public class SprintController {
 //        return ResponseEntity.ok(sprintService.getAllSprints());
 //    }
 
-    @DeleteMapping("/sprint/{sprintid}")
-    public ResponseEntity<String> deleteSprint(@PathVariable Long sprintid) throws Exception {
-        return ResponseEntity.ok(sprintService.deleteSprint(sprintid));
-    }
+//    @DeleteMapping("/sprint/{sprintid}")
+//    public ResponseEntity<String> deleteSprint(@PathVariable Long sprintid) throws Exception {
+//        return ResponseEntity.ok(sprintService.deleteSprint(sprintid));
+//    }
     @GetMapping("/sprint/tasks-count")
     public ResponseEntity<SprintTaskCountResponse> getTaskCount(@PathVariable Long teamid) throws Exception {
         return ResponseEntity.ok(sprintService.getTaskCounts(teamid));
     }
-
+    @DeleteMapping("/sprint/complete")
+    public ResponseEntity<String> completeSprintAndMoveTasksToBacklog(
+            @PathVariable Long teamid
+    ) throws Exception {
+        return ResponseEntity.ok(sprintService.completeSprintAndMoveTasksToBacklog(teamid));
+    }
 }

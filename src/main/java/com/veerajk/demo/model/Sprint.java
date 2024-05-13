@@ -23,12 +23,15 @@ public class Sprint {
     private String description;
 
 
-    @OneToMany(mappedBy= "sprint",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy= "sprint",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Column> columns;
 
 
     @Temporal(TemporalType.DATE)
     private LocalDate startdate;
+    @Temporal(TemporalType.DATE)
+    private LocalDate enddate;
+
     @jakarta.persistence.Column(columnDefinition = "integer default 15")
     private int duration;
 

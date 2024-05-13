@@ -4,19 +4,15 @@ import com.veerajk.demo.enums.TaskType;
 import com.veerajk.demo.model.User;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
-
 @Data
-public class TaskDto {
+public class BacklogTaskDto {
     private Long id;
     private String title;
     private String description;
     private TaskType type;
     private Integer storyPoints;
-    private List<CommentDto> comments;
+    private List<BacklogTaskCommentDto> comments;
     private User user;
-    private Date created;
-    private Date updated;
-
+    private String sprint;
 }

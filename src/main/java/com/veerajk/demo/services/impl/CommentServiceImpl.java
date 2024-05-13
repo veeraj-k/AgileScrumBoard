@@ -8,6 +8,7 @@ import com.veerajk.demo.repo.TaskCommentRepo;
 import com.veerajk.demo.repo.TaskRepo;
 import com.veerajk.demo.repo.UserRepo;
 import com.veerajk.demo.services.CommentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +54,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public String removeComment(Long id) throws Exception {
-        TaskComment comment = commentRepo.findById(id).orElseThrow(()-> new Exception("Comment not found!"));
+//        TaskComment comment = commentRepo.findById(id).orElseThrow(()-> new Exception("Comment not found!"));
         commentRepo.deleteById(id);
         return "Comment deleted successfully";
     }

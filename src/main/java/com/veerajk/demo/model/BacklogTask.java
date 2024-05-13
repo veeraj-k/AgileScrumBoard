@@ -16,6 +16,7 @@ import java.util.List;
 public class BacklogTask {
 
     @Id
+//    @GeneratedValue
     private Long id;
 
     private String title;
@@ -34,7 +35,12 @@ public class BacklogTask {
     @JoinColumn(name="userid" )
     private User user;
 
-    @OneToMany(mappedBy = "backlogTask", orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "backlog_id")
+    private Backlog backlog;
+
+    @OneToMany(mappedBy = "backlogTask", orphanRemoval = true,cascade = CascadeType.ALL)
     private List<BacklogTaskComment> backlogTaskComments = new ArrayList<>();
 
+    private String sprint;
 }

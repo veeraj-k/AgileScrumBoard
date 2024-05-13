@@ -72,26 +72,35 @@ public class ColumnServiceImpl implements ColumnService {
 
     public String  removeColumn(Long id,Long targetid) throws Exception {
         Column column = columnRepo.findById(id).orElseThrow();
+        boolean isDone = column.isIsdone();
+        if(isDone){
+            throw new Exception("Column with done status cannot be removed!");
+        }
         Column targetColumn = columnRepo.findById(targetid).orElseThrow(() -> new Exception("Target column not found!"));
         List<Task> tasks = column.getTasks();
         if (column.getTasks().size()!= 0) {
 
             tasks.forEach(task -> {
                 task.setColumn_id(targetColumn);
+                task.setIscompleted(targetColumn.isIsdone());
             });
 
             taskRepo.saveAll(tasks);
-            columnRepo.deleteById(id);
+            columnRepo.delete(column);
 
             return "Columns deleted and Tasks moved to - "+ targetColumn.getTitle();
         }
-
         columnRepo.deleteById(id);
         return "Column deleted";
     }
 
-    public List<ColumnWithoutTaskDto> getOnlyColumns(Long sprintid){
-        List<Column> columns = sprintRepo.findById(sprintid).orElseThrow().getColumns();
+    public List<ColumnWithoutTaskDto> getOnlyColumns(Long teamid) throws Exception {
+        Team team = teamRepo.findById(teamid).orElseThrow();
+        Sprint sprint = team.getSprint();
+        if(sprint==null){
+            throw new Exception("No Active sprint found");
+        }
+        List<Column> columns = sprint.getColumns();
         return columns.stream().map((column -> {ColumnWithoutTaskDto col = new ColumnWithoutTaskDto(column.getId(),column.getTitle()); return col;})).collect(Collectors.toList());
     }
 

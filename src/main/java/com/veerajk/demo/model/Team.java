@@ -17,7 +17,7 @@ public class Team {
 
     private String name;
 
-    @OneToOne(mappedBy = "team", orphanRemoval = true)
+    @OneToOne(mappedBy = "team",cascade = CascadeType.ALL,orphanRemoval = true)
     private Sprint sprint;
 
     @OneToOne(mappedBy = "team")

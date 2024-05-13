@@ -11,5 +11,7 @@ public class SprintDto {
     private String description;
     private LocalDate startdate;
     private int duration;
+    private LocalDate enddate;
+
 
 }

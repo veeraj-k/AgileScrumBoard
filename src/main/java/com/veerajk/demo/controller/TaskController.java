@@ -62,11 +62,11 @@ public class TaskController {
 //		return taskServiceImpl.getBoardTasks(boardid);
 //	}
 //
-	@DeleteMapping("/tasks/{taskid}")
-	public ResponseEntity<String> removeTask(@PathVariable Long taskid) throws Exception{
-		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
-
-	}
+//	@DeleteMapping("/tasks/{taskid}")
+//	public ResponseEntity<String> removeTask(@PathVariable Long taskid) throws Exception{
+//		return ResponseEntity.ok(taskServiceImpl.removeTask(taskid));
+//
+//	}
 	@PutMapping("/tasks/movetask")
 	public ResponseEntity<TaskDto> moveTask(@RequestBody MoveTaskRequest moveTaskRequest) throws Exception {
 

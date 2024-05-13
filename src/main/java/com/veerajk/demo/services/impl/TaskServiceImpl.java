@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,6 +59,8 @@ public class TaskServiceImpl implements TaskService {
         task.setUser(userRepo.findById(userid).get());
         task.setColumn_id(column);
         task.setIscompleted(column.isIsdone());
+        task.setCreated(new Date());
+        task.setUpdated(new Date());
         TaskDto taskResponseDto = mapTaskToDto(taskRepo.save(task));
         return taskResponseDto;
     }
@@ -79,6 +82,7 @@ public class TaskServiceImpl implements TaskService {
     public String editTaskTitle(Long taskid,String newTitle) throws Exception{
         Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
         task.setTitle(newTitle);
+        task.setUpdated(new Date());
         taskRepo.save(task);
         return "Title updated successfully!";
     }
@@ -86,6 +90,7 @@ public class TaskServiceImpl implements TaskService {
     public String editTaskDescription(Long taskid,String newDescription) throws Exception{
         Task task = taskRepo.findById(taskid).orElseThrow(()-> new Exception("Task not found!"));
         task.setDescription(newDescription);
+        task.setUpdated(new Date());
         taskRepo.save(task);
         return "Description updated successfully!";
     }
@@ -103,6 +108,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepo.findById(taskRequest.getId()).orElseThrow(()-> new Exception("Task not found!"));
         task.setColumn_id(column);
         task.setIscompleted(column.isIsdone());
+        task.setUpdated(new Date());
         Task updatedtask = taskRepo.save(task);
         return mapTaskToDto(updatedtask);
     }
@@ -125,6 +131,8 @@ public class TaskServiceImpl implements TaskService {
         }
         taskDto.setComments(commentDtoList);
         taskDto.setUser(task.getUser());
+        taskDto.setCreated(task.getCreated());
+        taskDto.setUpdated(task.getUpdated());
         return taskDto;
     }
     protected Task mapToEntity(TaskDto taskDto){
