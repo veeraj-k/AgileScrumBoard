@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.veerajk.demo.enums.TaskType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 import java.util.List;
@@ -26,8 +28,9 @@ public class Task{
 
     private String title;
 
-    @Lob
+//    @Lob
 //    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
+    @jakarta.persistence.Column(columnDefinition = "TEXT")
     private String description;
 
 
@@ -45,7 +48,7 @@ public class Task{
 
 
     private Integer storyPoints=0;
-    private boolean isvisible=true;
+
 
     @ManyToOne
     @JoinColumn(name="userid" )

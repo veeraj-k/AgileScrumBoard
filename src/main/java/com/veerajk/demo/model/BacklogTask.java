@@ -21,8 +21,9 @@ public class BacklogTask {
 
     private String title;
 
-    @Lob
+//    @Lob
 //    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
+    @jakarta.persistence.Column(columnDefinition = "TEXT")
     private String description;
 
 
