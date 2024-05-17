@@ -22,7 +22,7 @@ public class BacklogTask {
     private String title;
 
     @Lob
-    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
+//    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
     private String description;
 
 
