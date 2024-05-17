@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class UserController {
 
     @Autowired

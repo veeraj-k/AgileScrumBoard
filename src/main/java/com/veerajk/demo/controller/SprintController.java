@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 @Controller
 @RequestMapping("api/teams/{teamid}")
 public class SprintController {

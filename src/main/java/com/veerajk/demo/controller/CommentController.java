@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 @RequestMapping("/api/teams/{teamid}/sprint/columns/tasks")
 public class CommentController {
 

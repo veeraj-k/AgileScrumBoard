@@ -13,7 +13,7 @@ import com.veerajk.demo.repo.*;
 
 @RestController
 @RequestMapping("api/teams/{teamid}/sprint/columns")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class TaskController {
 
 //
