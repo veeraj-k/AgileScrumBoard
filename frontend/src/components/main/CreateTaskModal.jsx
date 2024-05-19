@@ -9,13 +9,11 @@ import {useParams} from "react-router-dom";
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote', 'code-block'],
-    ['link', 'formula'],
-    [{'font': []}],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
-    [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-
-    [{'align': []}],
-
+    ['link', 'image', 'formula'],
+    [{ 'font': [] }],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+    [{ 'align': [] }],
 ];
 
 const module = {

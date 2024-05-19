@@ -55,8 +55,7 @@ export const ActiveSprint = () => {
 
                                     <tr>
                                         <th>{sprint.id}</th>
-                                        <td><Link to={`/boards/${sprint.id}`}
-                                                  className="hover:text-primary underline">{sprint.name}</Link></td>
+                                        <td>{sprint.name}</td>
                                         <td
                                             dangerouslySetInnerHTML={{
                                                 __html: sprint.description,
