@@ -29,7 +29,7 @@ backlog, task comments.
    VITE_BACKEND_API_URL = http://localhost:8080
    ```
 ## Usage
-1. Start the development server: `npm start`
+1. Start the development server: `npm run dev`
 2. Open your browser and visit `http://localhost:3000`.
 
   
